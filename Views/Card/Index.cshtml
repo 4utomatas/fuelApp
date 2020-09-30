@@ -1,0 +1,62 @@
+﻿@model IEnumerable<kuras.Models.Card>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+<div class="row p-3">
+    <a class="btn btn-success m-1" asp-action="Create">Create New</a>
+    <a class="btn btn-danger m-1" asp-action="Uplaoad">Upload a file with cards</a>
+    <a class="btn btn-warning m-1" asp-action="DetailedList">Detailed List</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Car)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Emp)
+            </th>
+            <th>
+                Card
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Limit)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Car" asp-action="Details" asp-route-id="@item.Car">
+                        @Html.DisplayFor(modelItem => item.Car)
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="Employee" asp-action="Details" asp-route-id="@item.Emp">
+                        @Html.DisplayFor(modelItem => item.Emp)
+                    </a>
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Limit)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

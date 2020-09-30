@@ -1,0 +1,103 @@
+﻿@model IEnumerable<kuras.Models.Axapta>
+
+@{
+    ViewData["Title"] = "Refine";
+    Layout = "~/Views/Shared/_WideTableLayout.cshtml";
+}
+
+<h1>Refine</h1>
+<a class="btn btn-danger">add all</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpIdAutoTable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpIdEmplTable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardNumberD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberPlate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MakeModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpGroup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CityCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Occupation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Blocked)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpIdAutoTable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpIdEmplTable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardNumberD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberPlate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MakeModel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpGroup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Occupation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Blocked)
+            </td>
+            <td>
+                <form asp-action="Delete">
+                    <input type="hidden" value="@item.Id" name="Id" />
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
+                <a class="btn btn-info" asp-action="Add" asp-route-id="@item.Id">
+                    Edit
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

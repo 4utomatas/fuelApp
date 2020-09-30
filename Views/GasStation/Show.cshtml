@@ -1,0 +1,109 @@
+﻿@model List<kuras.ViewModels.GasStationFileViewModel>
+@{
+    ViewData["Title"] = "The Gas Station Report File";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+<h1>Review the gas report file</h1>
+<h4>
+    The name of the file is
+    @if (ViewBag.FileName != null)
+    {
+        @ViewBag.FileName;
+    } 
+    else {
+        <span>No name was parsed :(</span>
+    }
+</h4>
+
+<div class="input-group">
+    <input class="input-group-text" type="text" id="searchBar" onkeyup="searchBar()" placeholder="Search for card number.." title="Type in a name">
+</div>
+
+<table class="table table-bordered" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                Card Number
+            </th>
+            <th>
+                Total price
+            </th>
+            <th>
+                Litres
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var id = 0;
+        }
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @id
+                @{
+                    id++;
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardNumber)
+            </td>
+            <td>
+                @{
+                    var totalPrice = Math.Round(item.Sum, 2);
+                }
+                @totalPrice
+            </td>
+            <td>
+                @{
+                    var litres = Math.Round(item.L, 2);
+                }
+                @litres
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('tr').click(function () {
+                //Check to see if background color is set or if it's set to white.
+                if (this.style.background == "" || this.style.background == "white") {
+                    $(this).css('background', '#f54842');
+                }
+                else {
+                    $(this).css('background', 'white');
+                }
+            });
+        });
+        
+        function searchBar() {
+          // Declare variables
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("searchBar");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+
+          // Loop through all table rows, and hide those who don't match the search query
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
+    </script>
+}

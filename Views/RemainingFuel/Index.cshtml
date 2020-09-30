@@ -1,0 +1,48 @@
+﻿@model IEnumerable<KilometersFile>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutWithAnimation.cshtml";
+}
+
+<h1>Remaining Fuel Files</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                File name
+            </th>
+            <th class="text-center">
+                Uploaded to DB?
+            </th>
+        </tr>
+    </thead>
+    <tbody id="searchTable">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td class="text-center">
+
+                    @if (item.Uploaded)
+                    {
+                        <span class="glyphicon glyphicon-one-fine-green-dot"></span>
+                    }
+                    else
+                    {
+                        <a asp-action="Show" asp-route-id="@item.Id">Insert</a>
+                        <span class="glyphicon glyphicon-one-fine-red-dot"></span>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    
+}

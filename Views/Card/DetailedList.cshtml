@@ -1,0 +1,143 @@
+﻿@model kuras.ViewModels.CardFullViewModel
+@{
+    ViewData["Title"] = "DetailedList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detailed List</h1>
+
+<p>
+    <a class="btn btn-success" asp-action="Create">Create New</a>
+</p>
+<div class="input-group m-3">
+    <h3>Search:</h3>
+    <input class="input-group-text m-1" type="text" id="searchCard" onkeyup="searchBar()" placeholder="Card Number" title="Type in a card number">
+    <input class="input-group-text m-1" type="text" id="searchNumberPlate" onkeyup="searchBar()" placeholder="Number Plate" title="Type in a number plate">
+</div>
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                Card Number
+            </th>
+            <th>
+                Car
+            </th>
+            <th>
+                Employee
+            </th>
+            <th>
+                Limit
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 0;
+            foreach (var item in Model.AllCards)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td>
+                        <a asp-controller="Car" asp-action="Details" asp-route-id="@item.Car">
+                            @{
+                                int indexOfCar = Model.AllCars.FindIndex(x => x.Id == item.Car);
+                                var cardCar = Model.AllCars[indexOfCar];
+                                var car_text = item.Car + " " + cardCar.NumberPlate;
+                                @car_text
+                            }
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Employee" asp-action="Details" asp-route-id="@item.Emp">
+
+                            @{
+                                int indexOfEmp = Model.AllEmployees.FindIndex(x => x.Id == item.Emp);
+                                var cardEmp = Model.AllEmployees[indexOfEmp];
+                                <span>
+                                    @Html.DisplayFor(modelItem => item.Emp)
+                                </span>
+                                <span>
+                                    @Html.DisplayFor(modelItem => cardEmp.Fname)
+                                </span>
+                                <span>
+                                    @Html.DisplayFor(modelItem => cardEmp.Lname)
+                                </span>
+
+                            }
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Limit)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $(function() {
+                $("#myTable").tablesorter();
+            });
+
+        });
+
+        function searchBar() {
+            // Declare variables
+            var table, tr, td, i, txtValue;
+
+            var numberPlate = document.getElementById("searchNumberPlate");
+            var card = document.getElementById("searchCard");
+            var filterNB = numberPlate.value.toUpperCase();
+            var filterC = card.value.toUpperCase();
+
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            var tdNP, tdNumber, txtValueNP, txtValueNumber;
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+
+                // number plate
+                tdNP = tr[i].getElementsByTagName("td")[1];
+                tdNumber = tr[i].getElementsByTagName("td")[0];
+                if (tdNP && tdNumber) {
+                    txtValueNumber = tdNumber.textContent || tdNumber.innerText;
+                    txtValueNP = tdNP.textContent || tdNP.innerText;
+                    if (txtValueNumber != "" && txtValueNP != "") {
+                        if (txtValueNP.toUpperCase().indexOf(filterNB) > -1 &&
+                            txtValueNumber.toUpperCase().indexOf(filterC) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    } else if (txtValueNumber != "") {
+                        if (txtValueNumber.toUpperCase().indexOf(filterC) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    } else if (txtValueNP != "") {
+                        if (txtValueNP.toUpperCase().indexOf(filterNB) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+
+                }
+            }
+        }
+    </script>
+}

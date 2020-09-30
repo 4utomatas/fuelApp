@@ -1,0 +1,103 @@
+﻿@model List<kuras.Models.Report>
+@{
+    ViewData["Title"] = "CreateReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>The Long waited report</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                i
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Card
+            </th>
+            <th>
+                NP
+            </th>
+            <th>
+                Suma
+            </th>
+            <th>
+                Km
+            </th>
+            <th>
+                Km_gps
+            </th>
+            <th>
+                L
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                End
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            int i = 1;
+        }
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @if (item.Card != -1)
+                {
+                    <a asp-controller="Card" asp-action="Details" asp-route-id="@item.Card">
+                        @Html.DisplayFor(modelItem => item.Card)
+                    </a>
+                }
+                else
+                {
+                    <i>
+                        Error
+                    </i>
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberPlate)
+            </td>
+            <td>
+                @{
+                    var totalPrice = Math.Round(item.Suma, 2);
+                }
+                @totalPrice
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Km)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Km_gps)
+            </td>
+            <td>
+                @{
+                    var litres = Math.Round(item.L, 2);
+                }
+                @litres
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.End)
+            </td>
+        </tr>
+            i++;
+        }
+    </tbody>
+</table>

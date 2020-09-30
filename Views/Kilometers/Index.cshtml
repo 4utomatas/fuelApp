@@ -1,0 +1,114 @@
+﻿@model IEnumerable<KilometersFile>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Kilometers Files</h1>
+
+<div class="m-3">
+    <a class="btn btn-success m-1" asp-action="UploadGps">Upload GPS Kilometers</a>
+    <a class="btn btn-success m-1" asp-action="UploadOdo">Upload ODOmeter Kilometers</a>
+    <a class="btn btn-dark m-1" asp-controller="RemainingFuel" asp-action="Index">Go to Remaining fuel data view</a>
+    <p class="font-italic text-danger m-1">When Uploading ODOmeter Kilometer file, you are also uploading the Remaining fuel data!</p>
+</div>
+
+@{
+    List<KilometersFile> gps = new List<KilometersFile>();
+    List<KilometersFile> odo = new List<KilometersFile>();
+    foreach (var el in Model)
+    {
+        if (el.Gps)
+            gps.Add(el);
+        else odo.Add(el);
+
+    }
+}
+
+<h2>Odometer files</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                File name
+            </th>
+            <th class="text-center">
+                Uploaded to DB?
+            </th>
+            <th class="text-center">
+                Delete
+            </th>
+        </tr>
+    </thead>
+    <tbody id="searchTable">
+        @{
+            var list = odo.OrderByDescending(x => x.Id);
+        }
+        @foreach (var item in list)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td class="text-center">
+
+                    @if (item.Uploaded)
+                    {
+                        <span class="glyphicon glyphicon-one-fine-green-dot"></span>
+                    }
+                    else
+                    {
+                        <a asp-action="ShowOdo" asp-route-id="@item.Id">Insert</a>
+                        <span class="glyphicon glyphicon-one-fine-red-dot"></span>
+                    }
+
+                </td>
+                <td class="text-center">
+                    <a asp-action="Delete" asp-route-id="@item.Id">
+                        <i class="fas fa-times-circle"></i>
+                    </a>
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h2>GPS files</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                File name
+            </th>
+            <th class="text-center">
+                Uploaded to DB?
+            </th>
+        </tr>
+    </thead>
+    <tbody id="searchTable">
+        @{
+            list = gps.OrderByDescending(x => x.Id);
+        }
+        @foreach (var item in list)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td class="text-center">
+
+                    @if (item.Uploaded)
+                    {
+                        <span class="glyphicon glyphicon-one-fine-green-dot"></span>
+                    }
+                    else
+                    {
+                        <a asp-action="ShowGps" asp-route-id="@item.Id">Insert</a>
+                        <span class="glyphicon glyphicon-one-fine-red-dot"></span>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

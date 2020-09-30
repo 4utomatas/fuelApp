@@ -1,0 +1,54 @@
+﻿@model List<CardData>;
+@{
+    ViewData["Title"] = "ShowFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ShowFile</h1>
+<a asp-action="Insert" asp-route-id="@ViewBag.Id">
+    Insert into database
+</a>
+<table class="table table-bordered" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                Card Number
+            </th>
+            <th>
+                Card Number D
+            </th>
+            <th>
+                Number Plate
+            </th>
+            <th>
+                Make and Model
+            </th>
+            <th>
+                Driver
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardNumberD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberPlate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MakeModel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Driver)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

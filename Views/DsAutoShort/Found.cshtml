@@ -1,0 +1,102 @@
+﻿@model List<kuras.AxaptaViewModels.FetchedCarEmp>
+@{
+    ViewData["Title"] = "Cars + Emps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Cars + Employess</h1>
+
+<table class="table thead-sticky">
+    <thead>
+        <tr>
+            <th>
+                Number Plate
+            </th>
+            <th>
+                Make and Model
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Employee Id
+            </th>
+
+            <th>
+                Blocked
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Group
+            </th>
+            <th>
+                City Code
+            </th>
+            <th>
+                Occupation
+            </th>
+            <th>
+                EmpID
+            </th>
+        </tr>
+    </thead>
+    <tbody id="searchTable">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DsAuto.NumberPlate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DsAuto.MakeModel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DsAuto.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DsAuto.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DsAuto.Blocked)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AxEmployee.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AxEmployee.Dimension)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AxEmployee.StateId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AxEmployee.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AxEmployee.Emplid)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('tbody > tr').click(function () {
+                //Check to see if background color is set or if it's set to white.
+                if (this.style.background == "" || this.style.background == "white") {
+                    $(this).css('background', '#f54842');
+                }
+                else {
+                    $(this).css('background', 'white');
+                }
+            });
+            $(function() {
+                $("#myTable").tablesorter();
+            });
+        });
+    </script>
+}
+

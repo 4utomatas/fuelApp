@@ -1,0 +1,34 @@
+﻿@model IEnumerable<kuras.Models.ReportFile>
+
+@{
+    ViewData["Title"] = "SelectExcel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>SelectExcel</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FileName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileName)
+            </td>
+            <td>
+                <a asp-action="DownloadExcel" asp-route-id="@item.Id">Download</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

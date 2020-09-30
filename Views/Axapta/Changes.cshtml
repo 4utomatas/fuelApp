@@ -1,0 +1,86 @@
+﻿@model IEnumerable<kuras.ViewModels.AxaptaChangesViewModel>
+@{
+    ViewData["Title"] = "Changes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Changes</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Car changes
+            </th>
+            <th>
+                Card changes
+            </th>
+            <th>
+                Emp changes
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            string a = "";
+            if (item.FCar != null || item.FCard != null || item.FEmp != null)
+            {
+                <tr>
+                    <td>
+                        @{
+                            
+                            if (item.FCar != null)
+                                a = $"ID: {item.FCar.Id} {item.FCar.NumberPlate}: {item.FCar.Make} {item.FCar.Model}";
+
+                        }
+                        @a
+                    </td>
+                    <td>
+                        @{
+                            if (item.FCard != null)
+                                a = $"{item.FCard.Number} {item.FCard.NumberD}, carID: {item.FCard.Car}, empID: {item.FCard.Emp}";
+                            else a = "";
+                        }
+                        @a
+                    </td>
+                    <td>
+                        @{
+                            if (item.FEmp != null)
+                                a = $"{item.FEmp.Fname} {item.FEmp.Lname}, ID: {item.FEmp.EmplId}, City: {item.FEmp.City}, group: {item.FEmp.Group}";
+                            else a = "";
+                        }
+                        @a
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td>
+                    @{
+                        if (item.ACar != null)
+                            a = $"ID: {item.ACar.Id} {item.ACar.NumberPlate}: {item.ACar.Make} {item.ACar.Model}";
+                        else a = "";
+                    }
+                    @a
+                </td>
+                <td>
+                    @{
+                        if (item.ACard != null)
+                            a = $"{item.ACard.Number} {item.ACard.NumberD}, carID: {item.ACard.Car}, empID: {item.ACard.Emp}";
+                        else a = "";
+                    }
+                    @a
+                </td>
+                <td>
+                    @{
+                        if (item.AEmp != null)
+                            a = $"{item.AEmp.Fname} {item.AEmp.Lname}, ID: {item.AEmp.EmplId}, City: {item.AEmp.City}, group: {item.AEmp.Group}";
+                        else a = "";
+                    }
+                    @a
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

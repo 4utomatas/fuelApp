@@ -1,0 +1,124 @@
+﻿@model IEnumerable<kuras.Models.Report>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_WideTableLayout.cshtml";
+}
+
+<h1>Index</h1>
+<div class="jumbotron mt-3 mb-3">
+    <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
+    <a class="btn btn-outline-warning" asp-action="CreateExcel">Create Excel file</a>
+    <a class="btn btn-outline-primary" asp-action="SelectExcel">Reports.xlsx</a>
+</div>
+@{
+    List<string> dates = new List<string>();
+    foreach (var item in Model)
+    {
+        bool isNew = true;
+        foreach (var str in dates)
+        {
+            if (str == item.Date)
+            {
+                isNew = false;
+                break;
+            }
+        }
+        if (isNew)
+        {
+            dates.Add(item.Date);
+        }
+    }
+}
+<div class="jumbotron mt-3 mb-3">
+    @using (Html.BeginForm("CreateExcel", nameof(Report), FormMethod.Post))
+    {
+        <select class="form-control" name="date" required>
+            <option selected disabled value=""> Select a date</option>
+            @foreach (var item in dates)
+            {
+                <option value="@item">
+                    @item
+                </option>
+            }
+        </select>
+        <div class="form-group col-md-6 mb-3">
+            <input type="submit" value="Create Report" class="btn btn-primary" />
+        </div>
+    }
+
+</div>
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Card)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Km)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Km_gps)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.End)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Card)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Suma)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Km)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Km_gps)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $(function () {
+            $("#myTable").tablesorter();
+        });
+    </script>
+}

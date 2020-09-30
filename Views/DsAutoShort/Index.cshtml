@@ -1,0 +1,70 @@
+﻿@model List<kuras.AxaptaModels.DsAutoShort>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<table class="table thead-sticky">
+    <thead>
+        <tr>
+            <th>
+                Number Plate
+            </th>
+            <th>
+                Make and Model
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Employee Id
+            </th>
+            <th>
+                Blocked
+            </th>
+        </tr>
+    </thead>
+    <tbody id="searchTable">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberPlate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MakeModel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Blocked)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('tbody > tr').click(function () {
+                //Check to see if background color is set or if it's set to white.
+                if (this.style.background == "" || this.style.background == "white") {
+                    $(this).css('background', '#f54842');
+                }
+                else {
+                    $(this).css('background', 'white');
+                }
+            });
+            $(function() {
+                $("#myTable").tablesorter();
+            });
+        }); 
+    </script>
+}

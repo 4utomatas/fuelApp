@@ -1,0 +1,153 @@
+﻿@model List<GasStation>
+@{
+    ViewData["Title"] = "ShowReport";
+    Layout = "~/Views/Shared/_WideTableLayout.cshtml";
+}
+
+<h1>ShowReport</h1>
+
+<h4>
+    The name of the file is
+    @if (ViewBag.FileName != null)
+    {
+        @ViewBag.FileName;
+    }
+    else
+    {
+        <span>No name was parsed :(</span>
+    }
+</h4>
+
+<a class="btn btn-warning m-3" asp-action="Insert" asp-route-id="@ViewBag.Id">
+    Insert into database
+</a>
+
+<div class="input-group">
+    <input class="input-group-text" type="text" id="searchBar" onkeyup="searchBar()" placeholder="Search for card number.." title="Type in a name">
+</div>
+
+<table class="table table-bordered thead-sticky" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                No.
+            </th>
+            <th>
+                Card Number
+            </th>
+            <th>
+                Card Number D
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                ItemId
+            </th>
+            <th>
+                Item Name
+            </th>
+            <th>
+                Item Price
+            </th>
+            <th>
+                Item Amount
+            </th>
+            <th>
+                Total Price
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var id = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @id
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CardNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CardNumberD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @{
+                        var itemPrice = Math.Round(item.ItemPrice, 2);
+                    }
+                    @itemPrice
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemAmount)
+                </td>
+                <td>
+                    @{
+                        var itemTotalPrice = Math.Round(item.ItemTotalPrice, 2);
+                        id++;
+                    }
+                    @itemTotalPrice
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('tr').click(function () {
+                //Check to see if background color is set or if it's set to white.
+                if (this.style.background == "" || this.style.background == "white") {
+                    $(this).css('background', '#f54842');
+                }
+                else {
+                    $(this).css('background', 'white');
+                }
+            });
+            $(function() {
+                $("#myTable").tablesorter();
+            });
+
+        });
+
+        function searchBar() {
+          // Declare variables
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("searchBar");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+
+          // Loop through all table rows, and hide those who don't match the search query
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
+    </script>
+}

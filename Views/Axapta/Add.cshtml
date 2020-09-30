@@ -1,0 +1,77 @@
+﻿@model kuras.AxaptaViewModels.AddViewModel
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Add</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Add" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Car.NumberPlate" class="control-label"></label>
+                <input asp-for="Car.NumberPlate" class="form-control" />
+                <span asp-validation-for="Car.NumberPlate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Make" class="control-label"></label>
+                <input asp-for="Car.Make" class="form-control" />
+                <span asp-validation-for="Car.Make" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Car.Model" class="control-label"></label>
+                <input asp-for="Car.Model" class="form-control" />
+                <span asp-validation-for="Car.Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.EmplId" class="control-label"></label>
+                <input asp-for="Employee.EmplId" class="form-control" />
+                <span asp-validation-for="Employee.EmplId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.Fname" class="control-label"></label>
+                <input asp-for="Employee.Fname" class="form-control" />
+                <span asp-validation-for="Employee.Fname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.Lname" class="control-label"></label>
+                <input asp-for="Employee.Lname" class="form-control" />
+                <span asp-validation-for="Employee.Lname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.City" class="control-label"></label>
+                <input asp-for="Employee.City" class="form-control" />
+                <span asp-validation-for="Employee.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.Group" class="control-label"></label>
+                <input asp-for="Employee.Group" class="form-control" />
+                <span asp-validation-for="Employee.Group" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Card.Limit" class="control-label"></label>
+                <input asp-for="Card.Limit" class="form-control" />
+                <span asp-validation-for="Card.Limit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Card.Number" class="control-label"></label>
+                <input asp-for="Card.Number" class="form-control" />
+                <span asp-validation-for="Card.Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Card.NumberD" class="control-label"></label>
+                <input asp-for="Card.NumberD" class="form-control" />
+                <span asp-validation-for="Card.NumberD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

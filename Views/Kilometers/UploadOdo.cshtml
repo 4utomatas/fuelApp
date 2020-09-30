@@ -1,0 +1,43 @@
+﻿@model kuras.ViewModels.FileUploadViewModel;
+@{
+    ViewData["Title"] = "Upload KM";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Upload Kilometers and GPS kilometers</h1>
+
+<hr />
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form enctype="multipart/form-data" asp-action="UploadOdo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="gsReport" class="control-label"> Waiting for Daisena ataskaita </label>
+                <div class="custom-file">
+                    <input asp-for="gsReport" class="form-control custom-file-input" />
+                    <label class="custom-file-label"> ODO KM xlsx file (Daisena ataskaita) </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Upload" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next(".custom-file-label").html(fileName);
+            });
+        });
+    </script>
+}

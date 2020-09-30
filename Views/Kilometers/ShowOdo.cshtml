@@ -1,0 +1,104 @@
+﻿@model List<kuras.ViewModels.KilometersOdoFileViewModel>
+@{
+    ViewData["Title"] = "Show";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Show</h1>
+
+<h4>
+    The name of the file is
+    @if (ViewBag.FileName != null)
+    {
+        @ViewBag.FileName;
+    }
+    else
+    {
+        <span>No name was parsed :(</span>
+    }
+</h4>
+
+<a class="btn btn-warning m-3" asp-action="Insert" asp-route-id="@ViewBag.Id">
+    Insert into database
+</a>
+
+<div class="input-group">
+    <input class="input-group-text" type="text" id="searchBar" onkeyup="searchBar()" placeholder="Search for ..." title="Type in a name">
+</div>
+
+<table class="table table-bordered" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                Period
+            </th>
+            <th>
+                NumPlt
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                End
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Period)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberPlate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('tr').click(function () {
+                //Check to see if background color is set or if it's set to white.
+                if (this.style.background == "" || this.style.background == "white") {
+                    $(this).css('background', '#f54842');
+                }
+                else {
+                    $(this).css('background', 'white');
+                }
+            });
+        });
+
+        function searchBar() {
+          // Declare variables
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("searchBar");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+
+          // Loop through all table rows, and hide those who don't match the search query
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
+    </script>
+}

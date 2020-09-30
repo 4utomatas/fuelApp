@@ -1,0 +1,112 @@
+﻿@model kuras.Models.Test
+
+@{
+    ViewData["Title"] = "ShowFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ShowFile</h1>
+
+
+<h2>Choose an attribute the to table collumn</h2>
+
+<div class="container">
+    <button class="btn btn-dark" onclick="createList()">Click to create a list</button>
+    <div id="listPlace" class="container">
+
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+        </button>
+        <div class="dropdown-menu" id="dropdown_js" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" id="col_100" href="#">PVZ</a>
+        </div>
+    </div>
+</div>
+
+
+<table class="table-bordered">
+    <tr id="firstRow">
+    </tr>
+    @{
+        string temp = Model.FileName;
+        string[] tempArray = temp.Split('*');
+        int columnCount = 0;
+        int maxColumns = -1000;
+        foreach (string a in tempArray)
+        {
+            <tr>
+            
+                @{  columnCount = 0;
+                    string[] tempLine = a.Split(';');
+                    foreach (string b in tempLine)
+                    {
+                        
+                        columnCount = columnCount + 1;
+                        <td>
+                            @b
+                        </td>
+
+                    }
+                    if (columnCount > maxColumns)
+                        maxColumns = columnCount;
+                }
+            </tr>
+        }
+    }
+
+</table>
+
+
+
+<script>
+    createDropDown();
+    firstRow();
+    function createList() {
+        //console.log("YAY");
+        var list = ["a", "b", "c"];
+        var returnString = "";
+        var aS = "<a href=''>";
+        var aF = "</a>";
+        list.forEach(function (element) {
+            returnString += aS + element + aF + '\n';
+        });
+        document.getElementById('listPlace').innerHTML = returnString;
+    }
+    function createDropDown() {
+        var as = '<a class="dropdown-item" href="#">';
+        var af = '</a>';
+        var list = ["a", "b", "c"];
+        var test = "@temp";
+        var array = [];
+        test = test.split('*');
+        test.forEach(function (e) {
+            e = e.split(';');
+            e.forEach(function (a, index) {
+                if(index === 0)
+                    array.push(a);
+            });
+        });
+        test = "";
+        array.forEach(function (e) {
+            test += as + e + af + '\n';
+        });
+        document.getElementById('dropdown_js').innerHTML = test;
+    }
+    function firstRow() {
+        var tds = "<td";
+        var tde = "</td>";
+        var text = "";
+        for (var i = 0; i < @maxColumns; i++)
+            text += tds + "id='col_" + i + "' " + i + tde + '\n';
+        document.getElementById('firstRow').innerHTML = text;
+    }
+    function selectName(index, selection) {
+        
+        if (typeof document.getElementById(index) != 'undefined') {
+
+        }
+
+    }
+</script>

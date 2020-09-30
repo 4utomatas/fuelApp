@@ -1,0 +1,59 @@
+﻿@model IEnumerable<kuras.Models.GasStationFile>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FileName)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.Uploaded)
+                to Database?
+            </th>
+        </tr>
+    </thead>
+    <tbody id="searchTable">
+        @{
+            var list = Model.OrderByDescending(x => x.Id);
+        }
+        @foreach (var item in list)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td class="text-center">
+
+                    @if (item.Uploaded)
+                    {
+                        <span class="glyphicon glyphicon-one-fine-green-dot"></span>
+                    }
+                    else
+                    {
+                        <a class="btn btn-info" asp-action="Show" asp-route-id="@item.Id">Summed</a>
+                        <a class="btn btn-success" asp-action="ShowReport" asp-route-id="@item.Id">Detailed</a>
+                        <span class="glyphicon glyphicon-one-fine-red-dot"></span>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    
+
+}

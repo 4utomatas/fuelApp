@@ -1,0 +1,61 @@
+﻿@model kuras.Models.Report
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Report</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Card" class="control-label"></label>
+                <input asp-for="Card" class="form-control" />
+                <span asp-validation-for="Card" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Suma" class="control-label"></label>
+                <input asp-for="Suma" class="form-control" />
+                <span asp-validation-for="Suma" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Km" class="control-label"></label>
+                <input asp-for="Km" class="form-control" />
+                <span asp-validation-for="Km" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Km_gps" class="control-label"></label>
+                <input asp-for="Km_gps" class="form-control" />
+                <span asp-validation-for="Km_gps" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="L" class="control-label"></label>
+                <input asp-for="L" class="form-control" />
+                <span asp-validation-for="L" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Start" class="control-label"></label>
+                <input asp-for="Start" class="form-control" />
+                <span asp-validation-for="Start" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="End" class="control-label"></label>
+                <input asp-for="End" class="form-control" />
+                <span asp-validation-for="End" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

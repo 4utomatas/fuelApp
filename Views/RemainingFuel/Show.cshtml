@@ -1,0 +1,175 @@
+﻿@model List<RemainingFuel>
+@{
+    ViewData["Title"] = "Show";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Show</h1>
+
+<h4>
+    The name of the file is
+    @if (ViewBag.FileName != null)
+    {
+        @ViewBag.FileName;
+    }
+    else
+    {
+        <span>No name was parsed :(</span>
+    }
+</h4>
+
+<a class="btn btn-warning m-3" asp-action="Insert" asp-route-id="@ViewBag.Id">
+    Insert into database
+</a>
+
+<div class="input-group">
+    <input class="input-group-text" type="text" id="searchDate" onkeyup="searchBar()" placeholder="Date" title="Type in a date">
+    <input class="input-group-text" type="text" id="searchNumberPlate" onkeyup="searchBar()" placeholder="Number Plate" title="Type in a number plate">
+</div>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <!--
+                public int Id { get; set; }
+                public int Car { get; set; }
+                public string NumberPlate { get; set; }
+                public float StartFuel { get; set; }
+                public float EndFuel { get; set; }
+                public int Year { get; set; }
+                public int Month { get; set; }
+            -->
+            <th>
+                Date
+            </th>
+            <th>
+                Car ID
+            </th>
+            <th>
+                Number Plate
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                End
+            </th>
+
+        </tr>
+    </thead>
+    <tbody id="myTable">
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @{ 
+                    string date = String.Format("{0:0000}/{1:00}", item.Year, item.Month);
+                }
+                @date
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberPlate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartFuel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndFuel)
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('tbody > tr').click(function () {
+                //Check to see if background color is set or if it's set to white.
+                if (this.style.background == "" || this.style.background == "white") {
+                    $(this).css('background', '#f54842');
+                }
+                else {
+                    $(this).css('background', 'white');
+                }
+            });
+        });
+
+        function searchBar() {
+        // Declare variables
+            var table, tr, td, i, txtValue;
+
+            var numberPlate = document.getElementById("searchNumberPlate");
+            var date = document.getElementById("searchDate");
+            var filterNB = numberPlate.value.toUpperCase();
+            var filterD = date.value.toUpperCase();
+
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            var tdNP, tdDate, txtValueNP, txtValueDate;
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+
+                // number plate
+                tdNP = tr[i].getElementsByTagName("td")[2];
+                tdDate = tr[i].getElementsByTagName("td")[0];
+                if (tdNP && tdDate) {
+                    txtValueDate = tdDate.textContent || tdDate.innerText;
+                    txtValueNP = tdNP.textContent || tdNP.innerText;
+                    if (txtValueDate != "" && txtValueNP != "") {
+                        if (txtValueNP.toUpperCase().indexOf(filterNB) > -1 &&
+                            txtValueDate.toUpperCase().indexOf(filterD) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    } else if (txtValueDate != "") {
+                        if (txtValueDate.toUpperCase().indexOf(filterD) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    } else if (txtValueNP != "") {
+                        if (txtValueNP.toUpperCase().indexOf(filterNB) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                    
+                }
+                //else if (tdNP) {
+                //    txtValueNP = tdNP.textContent || tdNP.innerText;
+                //    if (txtValueNP.toUpperCase().indexOf(filterNB) > -1) {
+                //        tr[i].style.display = "";
+                //    } else {
+                //        tr[i].style.display = "none";
+                //    }
+                //} else if (tdDate) {
+                //    txtValueDate = tdDate.textContent || tdDate.innerText;
+                //    if (txtValueDate.toUpperCase().indexOf(filterNB) > -1) {
+                //        tr[i].style.display = "";
+                //    } else {
+                //        tr[i].style.display = "none";
+                //    }
+                //}
+                // date
+                
+                //if (td) {
+                //    txtValue = td.textContent || td.innerText;
+                //    if (txtValue.toUpperCase().indexOf(filterD) > -1) {
+                //        tr[i].style.display = "";
+                //    } else {
+                //        tr[i].style.display = "none";
+                //    }
+                //}
+            }
+        }      
+    </script>
+}
